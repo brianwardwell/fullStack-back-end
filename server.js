@@ -30,6 +30,7 @@ app.get("/api/notes", (req, res) => {
       id: 5
     }
   ];
+  res.json(notes)
 });
 
 const port = 5000;

@@ -11,7 +11,7 @@
     "url": "git+https://github.com/brianwardwell/fullStack-back-end.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Brian Wardwell",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/brianwardwell/fullStack-back-end/issues"
@@ -19,5 +19,8 @@
   "homepage": "https://github.com/brianwardwell/fullStack-back-end#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }

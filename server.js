@@ -1,32 +1,34 @@
 const express = require("express");
 
-const app = express();
+const server = express();
+
+server.use(express.json())
 
 app.get("/api/notes", (req, res) => {
   const notes = [
     {
       title: "Brian",
-      content: "get some coffee",
+      content: "get better at coding",
       id: 1,
     },
     {
       title: "Maddox",
-      content: "get some beer",
+      content: "be a good boy",
       id: 2,
     },
     {
       title: "Finley",
-      content: "get some food",
+      content: "be a sweet lil angel",
       id: 3,
     },
     {
       title: "Taryn",
-      content: "get some clothes",
+      content: "be a nurse",
       id: 4,
     },
     {
       title: "Gary",
-      content: "get some new shirts",
+      content: "watch the three stooges",
       id: 5
     }
   ];

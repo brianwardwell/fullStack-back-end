@@ -4,7 +4,11 @@ const server = express();
 
 server.use(express.json())
 
-app.get("/api/notes", (req, res) => {
+const port = 5000;
+
+server.listen(port, () => console.log(`Server started on port ${port}`));
+
+server.get("/api/notes", (req, res) => {
   const notes = [
     {
       title: "Brian",
@@ -35,6 +39,4 @@ app.get("/api/notes", (req, res) => {
   res.json(notes)
 });
 
-const port = 5000;
 
-app.listen(port, () => console.log(`Server started on port ${port}`));

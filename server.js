@@ -28,7 +28,6 @@ server.get("/api/notes/:id", (req, res) => {
     .then((found) => {
       if (found !== undefined) {
         res.status(200).json(found);
-        console.log("FOUND", found);
       } else res.status(500).json({ message: "ID doesn't exist" });
     })
     .catch(() => {
@@ -37,7 +36,6 @@ server.get("/api/notes/:id", (req, res) => {
 });
 
 server.post("/api/notes", (req, res) => {
-  console.log("params!", req);
   helpers
     .add(req.body)
     .then((note) => {
@@ -47,14 +45,19 @@ server.post("/api/notes", (req, res) => {
       res.status(500).json({ message: "Failed to create the note" });
     });
 });
+ 
 
-server.delete("/api/notes/:id", (req, res) => {
+server.delete('/api/notes/:id', (req, res) => {
   const {id} = req.params;
   helpers.remove(id)
-  .then(deletedCount => {
-    res.status(200).json({message: "successfully deleted"})
+  .then(count => {
+    if (count > 0) {
+      res.status(200).json({message: `successfully deleted note # ${count}`})
+    } else {
+      res.status(404).json({message: "Nothing to delete"})
+    }
   })
   .catch(() => {
-    res.status(500).json({message: "deletion failed"})
+    res.status(500).json({ message: "unable to delete"})
   })
-});
+})

@@ -49,12 +49,12 @@ server.post("/api/notes", (req, res) => {
 });
 
 server.delete("/api/notes/:id", (req, res) => {
-  helpers
-    .remove(req.body.id)
-    .then((item) => {
-      res.json({ removed: item });
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "couldnt delete item" });
-    });
+  const {id} = req.params;
+  helpers.remove(id)
+  .then(deletedCount => {
+    res.status(200).json({message: "successfully deleted"})
+  })
+  .catch(() => {
+    res.status(500).json({message: "deletion failed"})
+  })
 });

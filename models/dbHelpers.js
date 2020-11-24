@@ -7,6 +7,7 @@ module.exports = {
   find,
   remove,
   findById,
+  update
 };
 
 async function add(note) {
@@ -24,4 +25,8 @@ function findById(id) {
 
 function remove(id) {
   return db("notes").where({ id }).del();
+}
+
+function update(id, changes) {
+  return db('notes').where({id}).update(changes)
 }

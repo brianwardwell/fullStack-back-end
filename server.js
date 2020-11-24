@@ -45,6 +45,18 @@ server.post("/api/notes", (req, res) => {
       res.status(500).json({ message: "Failed to create the note" });
     });
 });
+
+server.put('/api/notes/:id', (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  helpers.update(id, changes).then(updated => {
+    res.status(200).json({message: `Successfully update note # ${updated}`})
+  })
+  .catch(() =>  {
+    res.status(500).json({message: "Couldn't update note"})
+  })
+})
  
 
 server.delete('/api/notes/:id', (req, res) => {
@@ -54,10 +66,10 @@ server.delete('/api/notes/:id', (req, res) => {
     if (count > 0) {
       res.status(200).json({message: `successfully deleted note # ${count}`})
     } else {
-      res.status(404).json({message: "Nothing to delete"})
+      res.status(404).json({message: "Unable to find that record"})
     }
   })
   .catch(() => {
-    res.status(500).json({ message: "unable to delete"})
+    res.status(500).json({ message: "Server error"})
   })
 })

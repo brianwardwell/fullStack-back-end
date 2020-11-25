@@ -12,6 +12,7 @@ module.exports = {
 
 async function add(note) {
   //db('notes') specifies which database ('db') and which table ('notes')
+  console.log('Getting here?')
   const [id] = await db("notes").insert(note);
   return id;
 }

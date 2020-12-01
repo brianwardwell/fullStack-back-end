@@ -16,7 +16,7 @@ async function add(note) {
   return id;
 }
 function find() {
-  return db("notes");
+  return db("notes").orderBy('created_at', 'desc');
 }
 
 function findById(id) {

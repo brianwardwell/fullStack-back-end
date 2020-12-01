@@ -83,4 +83,21 @@ router.get("/", (req, res) => {
       });
   });
 
+  router.delete("/", (req, res) => {
+    helpers
+      .removeAll()
+      .then((count) => {
+        if (count > 0) {
+          res
+            .status(200)
+            .json({ message: `successfully deleted note # ${count}` });
+        } else {
+          res.status(404).json({ message: "Unable to find that record" });
+        }
+      })
+      .catch(() => {
+        res.status(500).json({ message: "Server error" });
+      });
+  });
+
   module.exports = router;

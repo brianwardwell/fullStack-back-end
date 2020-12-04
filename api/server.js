@@ -1,6 +1,7 @@
 //server.js should ONLY be concerned with setting up the server
 const express = require("express");
 const notesRouter = require('../Routes/notes-router')
+const usersRouter = require('../Routes/users-router')
 
 const server = express();
 
@@ -14,6 +15,7 @@ server.get('/', (req, res) => {
 
 //Tell server when to use the various routers (in this case, notesRouter) when the proper endpoint is hit
 server.use('/api/notes', notesRouter);
+server.use('/api/users', usersRouter)
 
 module.exports = server;
 

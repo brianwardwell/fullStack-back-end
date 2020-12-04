@@ -1,5 +1,7 @@
 const express = require('express')
 const useHelp = require('../models/usersHelpers')
-const userRouter = express.Router()
+const router = express.Router()
 
-module.exports = userRouter;
+router.post('/')
+
+module.exports = router;

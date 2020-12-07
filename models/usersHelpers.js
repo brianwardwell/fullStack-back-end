@@ -15,3 +15,8 @@ function findUser (username) {
 function findAllUsers () {
     return db('users')
 }
+
+async function addUser (user) {
+  const [id] = await db('users').insert(user);
+  return id;
+}

@@ -2,6 +2,7 @@ const express = require("express");
 const useHelp = require("../models/usersHelpers");
 const router = express.Router();
 
+//create user
 router.post("/", (req, res) => {
   console.log("Req Body!", req.body);
   useHelp
@@ -14,6 +15,7 @@ router.post("/", (req, res) => {
     });
 });
 
+//retrieve list of users
 router
   .get("/", (req, res) => {
     useHelp.findAllUsers().then((users) => {
@@ -24,5 +26,11 @@ router
   })
   
   });
+
+//add note for a specific user
+
+router.post('/:userId/notes', (req, res) => {
+  
+})
 
 module.exports = router;

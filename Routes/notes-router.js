@@ -38,6 +38,7 @@ router.get("/", (req, res) => {
   });
   
   router.post("/", (req, res) => {
+    console.log('what about  here')
     helpers
       .add(req.body)
       .then((note) => {

@@ -6,6 +6,7 @@ module.exports = {
   findUser,
   findAllUsers,
   addUser,
+  findById
 };
 
 function findUser (username) {
@@ -19,4 +20,8 @@ function findAllUsers () {
 async function addUser (user) {
   const [id] = await db('users').insert(user);
   return id;
+}
+
+function findById(id) {
+  return db("users").where({ id }).first();
 }

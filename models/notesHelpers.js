@@ -4,7 +4,7 @@ const db = knex(config.development);
 
 module.exports = {
   add,
-  find,
+  findByUser,
   remove,
   findById,
   update,
@@ -16,8 +16,8 @@ async function add(note) {
   const [id] = await db("notes").insert(note);
   return id;
 }
-function find() {
-  return db("notes").orderBy('created_at', 'desc');
+function findByUser(id) {
+  return db("notes").where({ id }).orderBy('created_at', 'desc');
 }
 
 function findById(id) {

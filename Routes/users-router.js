@@ -5,8 +5,6 @@ const router = express.Router();
 
 /********************* USERS ROUTING *********************/
 
-
-
 //retrieve list of users
 router.get("/", (req, res) => {
   useHelp
@@ -21,30 +19,34 @@ router.get("/", (req, res) => {
 
 //get specific user
 router.get("/:id", (req, res) => {
-  console.log('HERE?')
+  console.log("HERE?");
   const { id } = req.params;
-  console.log('ID', id)
+  console.log("ID", id);
   // When trying to get a user ID that doesn't exist, it responds with a "1" for some reason.  User is undefined in that scenario so the if statement below was used.
   useHelp
     .findById(id)
     .then((user) => {
-      console.log('USER', user)
-      if (user != undefined)
-      {res.status(200).json(user);}
-      else {
-        res.status(400).json({message: "Couldn't find that user"})
+      console.log("USER", user);
+      if (user != undefined) {
+        res.status(200).json(user);
+      } else {
+        res.status(400).json({ message: "Couldn't find that user" });
       }
     })
     .catch((err) => {
       res.status(500).json({ message: "Internal server error" });
     });
-}); 
+});
 
-
+router.delete("/", (req, res) => {
+  useHelp.deleteAllUsers().then((count) => {
+    count
+      ? res.status(200).json({ message: "Successfully deleted users" })
+      : res.status(500).json({ message: "Couldn't delete users" });
+  });
+});
 
 /********************* NOTES ROUTING *********************/
-
-
 
 //Basic routing structure:
 //server.METHOD(PATH, HANDLER)
@@ -83,8 +85,8 @@ router.get("/:id", (req, res) => {
 
 router.post("/:id/notes", (req, res) => {
   const { id } = req.params;
-  console.log("req.params", id)
-  console.log('what about  here', req.body)
+  console.log("req.params", id);
+  console.log("what about  here", req.body);
   helpers
     .add(req.body)
     .then((note) => {
@@ -93,7 +95,6 @@ router.post("/:id/notes", (req, res) => {
     .catch((err) => {
       res.status(500).json({ message: "Failed to create the note" });
     });
-    
 });
 
 router.put("/:id", (req, res) => {

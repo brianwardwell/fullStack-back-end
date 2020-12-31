@@ -8,10 +8,12 @@ const secret = require('../api/secret')
 
 
 //create user
-router.post("/register", (req, res) => {
+router.post("/signIn", (req, res) => {
     const user = req.body;
     const rounds = 12;
     const hash = bcrypt.hashSync(user.password, rounds)
+    user.password = hash
+    console.log('hash', user.password)
 
     useHelp
       .addUser(user)

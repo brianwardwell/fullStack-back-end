@@ -7,7 +7,7 @@ const secrets = require('../api/secret')
 
 //This will verify that the user is logged in
 
-module.exports = (req, res, next) {
+module.exports = (req, res, next) => {
     const token = req.headers.authorization;
     const secret = secrets.jwtSecret;
     token ? jwt.verify(token, secret, (error, decodedToken) => {

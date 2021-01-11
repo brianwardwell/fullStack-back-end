@@ -6,21 +6,21 @@ const router = express.Router();
 /********************* USERS ROUTING *********************/
 
 //retrieve list of users
-router.get("/", (req, res) => {
-  useHelp
-    .findAllUsers()
-    .then((users) => {
-      res.status(200).json(users);
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Couldn't retrieve users" });
-    });
-});
+// router.get("/", (req, res) => {
+//   useHelp
+//     .findAllUsers()
+//     .then((users) => {
+//       res.status(200).json(users);
+//     })
+//     .catch((err) => {
+//       res.status(500).json({ message: "Couldn't retrieve users" });
+//     });
+// });
 
 //get specific user
-router.get("/:id", (req, res) => {
+router.get("/", (req, res) => {
   console.log("HERE?");
-  const { id } = req.params;
+  const { id } = req.decodedToken;
   console.log("ID", id);
   // When trying to get a user ID that doesn't exist, it responds with a "1" for some reason.  User is undefined in that scenario so the if statement below was used.
   useHelp
@@ -38,6 +38,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
+//Make sure to delete this before deployment!!!!!!!!!!!!!!!!
 router.delete("/", (req, res) => {
   useHelp.deleteAllUsers().then((count) => {
     count
@@ -55,8 +56,8 @@ router.delete("/", (req, res) => {
 //Path is a path on the server
 //Handler is the function executed when the route is matched
 
-router.get("/:id/notes", (req, res) => {
-  const { id } = req.params;
+router.get("/notes", (req, res) => {
+  const { id } = req.decodedToken;
   helpers
     .findByUser(id)
     .then((notes) => {
@@ -113,6 +114,7 @@ router.put("/:id", (req, res) => {
     });
 });
 
+//Extract ID from decodedToken to delete note if userId matches note user ID
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
   helpers
@@ -131,6 +133,7 @@ router.delete("/:id", (req, res) => {
     });
 });
 
+//Deletes all notes... extract ID to delete for specific user
 router.delete("/", (req, res) => {
   helpers
     .removeAll()

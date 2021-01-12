@@ -8,7 +8,8 @@ module.exports = {
   remove,
   findById,
   update,
-  removeAll
+  removeAll, 
+  findAll
 };
 
 async function add(note) {
@@ -16,8 +17,13 @@ async function add(note) {
   const [id] = await db("notes").insert(note);
   return id;
 }
+
 function findByUser(id) {
   return db("notes").where({ id }).orderBy('created_at', 'desc');
+}
+
+function findAll() {
+  return db("notes")
 }
 
 function findById(id) {

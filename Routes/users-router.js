@@ -57,17 +57,31 @@ router.delete("/", (req, res) => {
 //Handler is the function executed when the route is matched
 
 router.get("/notes", (req, res) => {
-  const { id } = req.decodedToken;
+  console.log('GET ALL')
   helpers
-    .findByUser(id)
+    .findAll()
     .then((notes) => {
       res.json(notes);
     })
     .catch((err) => {
-      res.status(500).json({ error: "couldn't retrieve notes" });
+      res.status(500).json({ message: err });
     });
-  // res.json(notes)
 });
+
+// router.get("/notes", (req, res) => {
+//   console.log('REQ DECODED', req.decodedToken)
+//   const { id } = req.decodedToken;
+//   console.log("NOTES ID", id)
+//   helpers
+//     .findByUser(id)
+//     .then((notes) => {
+//       res.json(notes);
+//     })
+//     .catch((err) => {
+//       res.status(500).json({ error: "couldn't retrieve notes" });
+//     });
+//   // res.json(notes)
+// });
 
 router.get("/:id", (req, res) => {
   const { id } = req.params;
@@ -84,16 +98,18 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.post("/:id/notes", (req, res) => {
-  const { id } = req.params;
-  console.log("req.params", id);
-  console.log("what about  here", req.body);
+router.post("/notes", (req, res) => {
+  /**** not sure if i need to specify user id code below?  I removed :id from the endpoint so probably not? */
+  // const { id } = req.params;
+  // console.log("req.params", id);
+  console.log("POST REQ.BODY", req.body)
   helpers
     .add(req.body)
     .then((note) => {
       res.status(200).json(note);
     })
     .catch((err) => {
+      console.log("POST ERROR", err)
       res.status(500).json({ message: "Failed to create the note" });
     });
 });

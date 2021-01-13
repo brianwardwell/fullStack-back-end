@@ -104,7 +104,7 @@ router.post("/notes", (req, res) => {
   // console.log("req.params", id);
   console.log("POST REQ.BODY", req.body)
   helpers
-    .add(req.body)
+    .add({title: "test", content: "post test", user_id: "37"})
     .then((note) => {
       res.status(200).json(note);
     })

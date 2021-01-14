@@ -57,7 +57,6 @@ router.delete("/", (req, res) => {
 //Handler is the function executed when the route is matched
 
 router.get("/notes", (req, res) => {
-  console.log('GET ALL')
   helpers
     .findAll()
     .then((notes) => {
@@ -102,9 +101,9 @@ router.post("/notes", (req, res) => {
   /**** not sure if i need to specify user id code below?  I removed :id from the endpoint so probably not? */
   // const { id } = req.params;
   // console.log("req.params", id);
-  console.log("POST REQ.BODY", req.body)
+  
   helpers
-    .add(req.body)
+    .add({...req.body, user_id: req.decodedToken.userId})
     .then((note) => {
       res.status(200).json(note);
     })
@@ -131,8 +130,9 @@ router.put("/:id", (req, res) => {
 });
 
 //Extract ID from decodedToken to delete note if userId matches note user ID
-router.delete("/:id", (req, res) => {
+router.delete("/notes/:id", (req, res) => {
   const { id } = req.params;
+  console.log("WHAT hell is ID", id)
   helpers
     .remove(id)
     .then((count) => {
@@ -150,21 +150,24 @@ router.delete("/:id", (req, res) => {
 });
 
 //Deletes all notes... extract ID to delete for specific user
-router.delete("/", (req, res) => {
-  helpers
-    .removeAll()
-    .then((count) => {
-      if (count > 0) {
-        res
-          .status(200)
-          .json({ message: `successfully deleted note # ${count}` });
-      } else {
-        res.status(404).json({ message: "Unable to find that record" });
-      }
-    })
-    .catch(() => {
-      res.status(500).json({ message: "Server error" });
-    });
-});
+//Delete below conflicts with delete above. Keeping it as an option to delete all for dev purposes.
+
+// router.delete("/notes", (req, res) => {
+//   console.log("Are We Here???")
+//   helpers
+//     .removeAll()
+//     .then((count) => {
+//       if (count > 0) {
+//         res
+//           .status(200)
+//           .json({ message: `successfully deleted note # ${count}` });
+//       } else {
+//         res.status(404).json({ message: "Delete Failed" });
+//       }
+//     })
+//     .catch(() => {
+//       res.status(500).json({ message: "Server error" });
+//     });
+// });
 
 module.exports = router;

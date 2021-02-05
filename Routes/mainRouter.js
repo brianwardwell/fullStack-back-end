@@ -6,35 +6,14 @@ const router = express.Router();
 /********************* USERS ROUTING *********************/
 
 //retrieve list of users
-// router.get("/", (req, res) => {
-//   useHelp
-//     .findAllUsers()
-//     .then((users) => {
-//       res.status(200).json(users);
-//     })
-//     .catch((err) => {
-//       res.status(500).json({ message: "Couldn't retrieve users" });
-//     });
-// });
-
-//get specific user
 router.get("/", (req, res) => {
-  console.log("HERE?");
-  const { id } = req.decodedToken;
-  console.log("ID", id);
-  // When trying to get a user ID that doesn't exist, it responds with a "1" for some reason.  User is undefined in that scenario so the if statement below was used.
   useHelp
-    .findById(id)
-    .then((user) => {
-      console.log("USER", user);
-      if (user != undefined) {
-        res.status(200).json(user);
-      } else {
-        res.status(400).json({ message: "Couldn't find that user" });
-      }
+    .findAllUsers()
+    .then((users) => {
+      res.status(200).json(users);
     })
     .catch((err) => {
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ message: "Couldn't retrieve users" });
     });
 });
 
@@ -56,31 +35,31 @@ router.delete("/", (req, res) => {
 //Path is a path on the server
 //Handler is the function executed when the route is matched
 
-router.get("/notes", (req, res) => {
-  helpers
-    .findAll()
-    .then((notes) => {
-      res.json(notes);
-    })
-    .catch((err) => {
-      res.status(500).json({ message: err });
-    });
-});
-
 // router.get("/notes", (req, res) => {
-//   console.log('REQ DECODED', req.decodedToken)
-//   const { id } = req.decodedToken;
-//   console.log("NOTES ID", id)
+//   console.log("What's in Req", req)
 //   helpers
-//     .findByUser(id)
+//     .findAllByUserId()
 //     .then((notes) => {
 //       res.json(notes);
 //     })
 //     .catch((err) => {
-//       res.status(500).json({ error: "couldn't retrieve notes" });
+//       res.status(500).json({ message: err });
 //     });
-//   // res.json(notes)
 // });
+
+router.get("/notes", (req, res) => {
+  console.log('REQ DECODED', req.decodedToken)
+  const { userId } = req.decodedToken;
+  helpers
+    .findByUser(userId)
+    .then((notes) => {
+      res.json(notes);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: "couldn't retrieve notes" });
+    });
+  // res.json(notes)
+});
 
 router.get("/:id", (req, res) => {
   const { id } = req.params;
@@ -101,11 +80,11 @@ router.post("/notes", (req, res) => {
   /**** not sure if i need to specify user id code below?  I removed :id from the endpoint so probably not? */
   // const { id } = req.params;
   // console.log("req.params", id);
-  
   helpers
     .add({...req.body, user_id: req.decodedToken.userId})
     .then((note) => {
       res.status(200).json(note);
+      console.log("NOTE", note)
     })
     .catch((err) => {
       console.log("POST ERROR", err)
@@ -113,7 +92,7 @@ router.post("/notes", (req, res) => {
     });
 });
 
-router.put("/:id", (req, res) => {
+router.put("/notes/:id", (req, res) => {
   const { id } = req.params;
   const changes = req.body;
 
@@ -132,7 +111,7 @@ router.put("/:id", (req, res) => {
 //Extract ID from decodedToken to delete note if userId matches note user ID
 router.delete("/notes/:id", (req, res) => {
   const { id } = req.params;
-  console.log("WHAT hell is ID", id)
+  console.log("WHAT is ID", id)
   helpers
     .remove(id)
     .then((count) => {

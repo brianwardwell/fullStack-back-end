@@ -14,13 +14,14 @@ module.exports = {
 
 async function add(note) {
   //db('notes') specifies which database ('db') and which table ('notes')
-
+  console.log("note in helpers", note)
   const [id] = await db("notes").insert(note);
-  return id;
+  return findById(id)
+  // return id;
 }
 
 function findByUser(id) {
-  return db("notes").where({ id }).orderBy('created_at', 'desc');
+  return db("notes").where('user_id', id).orderBy('created_at', 'desc');
 }
 
 function findAll() {

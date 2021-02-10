@@ -4,20 +4,28 @@ const db = knex(config.development);
 
 module.exports = {
   add,
-  find,
+  findByUser,
   remove,
   findById,
   update,
-  removeAll
+  removeAll, 
+  findAll
 };
 
 async function add(note) {
   //db('notes') specifies which database ('db') and which table ('notes')
+  console.log("note in helpers", note)
   const [id] = await db("notes").insert(note);
-  return id;
+  return findById(id)
+  // return id;
 }
-function find() {
-  return db("notes").orderBy('created_at', 'desc');
+
+function findByUser(id) {
+  return db("notes").where('user_id', id).orderBy('created_at', 'desc');
+}
+
+function findAll() {
+  return db("notes")
 }
 
 function findById(id) {

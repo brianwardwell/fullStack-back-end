@@ -9,7 +9,7 @@ exports.up = function (knex) {
     tbl.increments();
     tbl.text("title");
     tbl.text("content");
-    tbl.timestamps();
+    tbl.timestamps(true, true);
     tbl
       .integer("user_id")
       .unsigned()

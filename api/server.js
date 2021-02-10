@@ -12,7 +12,7 @@ server.use(cors());
 server.use(express.json());
 
 //set up basic home route to make sure server is up and running
-server.get('/api', (req, res) => {
+server.get('/', (req, res) => {
     res.json({message: "Server is working!!"})
 });
 

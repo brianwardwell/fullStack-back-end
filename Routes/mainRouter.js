@@ -2,6 +2,10 @@ const express = require("express");
 const useHelp = require("../models/usersHelpers");
 const helpers = require("../models/notesHelpers");
 const router = express.Router();
+var StatsD = require('hot-shots');
+var dogstatsd = new StatsD();
+
+
 
 /********************* USERS ROUTING *********************/
 
@@ -90,6 +94,8 @@ router.post("/notes", (req, res) => {
       console.log("POST ERROR", err)
       res.status(500).json({ message: "Failed to create the note" });
     });
+    // Increment a counter.
+dogstatsd.increment('notes.new')
 });
 
 router.put("/notes/:id", (req, res) => {

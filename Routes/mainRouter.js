@@ -95,7 +95,7 @@ router.post("/notes", (req, res) => {
       res.status(500).json({ message: "Failed to create the note" });
     });
     // Increment a counter.
-dogstatsd.increment('notes.new')
+dogstatsd.increment('notes.new');
 });
 
 router.put("/notes/:id", (req, res) => {

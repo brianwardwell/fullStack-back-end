@@ -20,6 +20,7 @@
   "homepage": "https://github.com/brianwardwell/fullStack-back-end#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "connect-datadog": "0.0.9",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "hot-shots": "^8.3.0",

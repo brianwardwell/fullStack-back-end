@@ -10,7 +10,6 @@ const secrets = require('../api/secret')
 module.exports = (req, res, next) => {
     const token = req.headers.authorization;
     const secret = secrets.jwtSecret;
-    console.log('GETTING TOKEN?', token)
     token ? jwt.verify(token, secret, (error, decodedToken) => {
         error ? res.status(401).json({message: "Wrong Password", error})
         : req.decodedToken = decodedToken;

@@ -2,10 +2,8 @@ const express = require("express");
 const useHelp = require("../models/usersHelpers");
 const helpers = require("../models/notesHelpers");
 const router = express.Router();
-var StatsD = require('hot-shots');
+var StatsD = require("hot-shots");
 var dogstatsd = new StatsD();
-
-
 
 /********************* USERS ROUTING *********************/
 
@@ -39,20 +37,8 @@ router.delete("/", (req, res) => {
 //Path is a path on the server
 //Handler is the function executed when the route is matched
 
-// router.get("/notes", (req, res) => {
-//   console.log("What's in Req", req)
-//   helpers
-//     .findAllByUserId()
-//     .then((notes) => {
-//       res.json(notes);
-//     })
-//     .catch((err) => {
-//       res.status(500).json({ message: err });
-//     });
-// });
-
 router.get("/notes", (req, res) => {
-  console.log('REQ DECODED', req.decodedToken)
+  console.log("REQ DECODED", req.decodedToken);
   const { userId } = req.decodedToken;
   helpers
     .findByUser(userId)
@@ -85,17 +71,17 @@ router.post("/notes", (req, res) => {
   // const { id } = req.params;
   // console.log("req.params", id);
   helpers
-    .add({...req.body, user_id: req.decodedToken.userId})
+    .add({ ...req.body, user_id: req.decodedToken.userId })
     .then((note) => {
       res.status(200).json(note);
-      console.log("NOTE", note)
+      console.log("NOTE", note);
     })
     .catch((err) => {
-      console.log("POST ERROR", err)
+      console.log("POST ERROR", err);
       res.status(500).json({ message: "Failed to create the note" });
     });
-    // Increment a counter.
-dogstatsd.increment('notes.new');
+  // Increment a counter.
+  dogstatsd.increment("notes.new");
 });
 
 router.put("/notes/:id", (req, res) => {
@@ -117,7 +103,7 @@ router.put("/notes/:id", (req, res) => {
 //Extract ID from decodedToken to delete note if userId matches note user ID
 router.delete("/notes/:id", (req, res) => {
   const { id } = req.params;
-  console.log("WHAT is ID", id)
+  console.log("WHAT is ID", id);
   helpers
     .remove(id)
     .then((count) => {
@@ -133,26 +119,5 @@ router.delete("/notes/:id", (req, res) => {
       res.status(500).json({ message: "Server error" });
     });
 });
-
-//Deletes all notes... extract ID to delete for specific user
-//Delete below conflicts with delete above. Keeping it as an option to delete all for dev purposes.
-
-// router.delete("/notes", (req, res) => {
-//   console.log("Are We Here???")
-//   helpers
-//     .removeAll()
-//     .then((count) => {
-//       if (count > 0) {
-//         res
-//           .status(200)
-//           .json({ message: `successfully deleted note # ${count}` });
-//       } else {
-//         res.status(404).json({ message: "Delete Failed" });
-//       }
-//     })
-//     .catch(() => {
-//       res.status(500).json({ message: "Server error" });
-//     });
-// });
 
 module.exports = router;

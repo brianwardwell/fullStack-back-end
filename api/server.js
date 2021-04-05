@@ -27,14 +27,10 @@ server.get('/', (req, res) => {
     res.json({message: "Server is working!!"})
 });
 
-//Tell server when to use the various routers (in this case, usersRouter) when the proper endpoint is hit
+//Tell server when to use the various routers when the proper endpoint is hit
 server.use('/api/users', authMidware, mainRouter)
 server.use('/api/auth',  authRouter)
 
 module.exports = server;
-
-
-
-
 
 

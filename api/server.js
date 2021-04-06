@@ -13,12 +13,12 @@ var dd_options = {
   var connect_datadog = require('connect-datadog')(dd_options);
   
   // Add the datadog-middleware before your router
-
+// Create instance of express  app
 const server = express();
 
 server.use(connect_datadog);
 
-//Teach server to parse json
+//Global middlewhere (not route-specific)
 server.use(cors());
 server.use(express.json());
 
@@ -28,6 +28,7 @@ server.get('/', (req, res) => {
 });
 
 //Tell server when to use the various routers when the proper endpoint is hit
+//Route-specific middleware
 server.use('/api/users', authMidware, mainRouter)
 server.use('/api/auth',  authRouter)
 

@@ -22,6 +22,7 @@
     "bcrypt": "^5.0.0",
     "connect-datadog": "0.0.9",
     "cors": "^2.8.5",
+    "dd-trace": "^1.6.0",
     "express": "^4.17.1",
     "hot-shots": "^8.3.0",
     "jsonwebtoken": "^8.5.1",

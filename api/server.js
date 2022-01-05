@@ -1,4 +1,5 @@
 //server.js should ONLY be concerned with setting up the server
+const tracer = require('dd-trace').init();
 const express = require("express");
 var cors = require('cors')
 const mainRouter = require('../Routes/mainRouter')

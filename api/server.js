@@ -11,13 +11,13 @@ var dd_options = {
     'tags': ['app:my_app']
       }
   
-  var connect_datadog = require('connect-datadog')(dd_options);
+  //var connect_datadog = require('connect-datadog')(dd_options);
   
   // Add the datadog-middleware before your router
 // Create instance of express  app
 const server = express();
 
-server.use(connect_datadog);
+//server.use(connect_datadog);
 
 //Global middlewhere (not route-specific)
 server.use(cors());

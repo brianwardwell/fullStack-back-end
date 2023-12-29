@@ -6,14 +6,6 @@ const mainRouter = require('../Routes/mainRouter')
 const authRouter = require('../Routes/authRouter')
 const authMidware = require('../Routes/auth-midware')
 
-var dd_options = {
-    'response_code':true,
-    'tags': ['app:my_app']
-      }
-  
-  //var connect_datadog = require('connect-datadog')(dd_options);
-  
-  // Add the datadog-middleware before your router
 // Create instance of express  app
 const server = express();
 

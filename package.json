@@ -1,5 +1,5 @@
 {
-  "name": "fullStack-back-end",
+  "name": "everclone-server",
   "version": "1.0.0",
   "description": "Backend for notes app",
   "main": "index.js",

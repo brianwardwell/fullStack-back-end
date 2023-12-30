@@ -19,6 +19,10 @@
   },
   "homepage": "https://github.com/brianwardwell/fullStack-back-end#readme",
   "dependencies": {
+    "@opentelemetry/api": "^1.7.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.40.2",
+    "@opentelemetry/sdk-metrics": "^1.19.0",
+    "@opentelemetry/sdk-node": "^0.46.0",
     "bcrypt": "^5.0.0",
     "connect-datadog": "0.0.9",
     "cors": "^2.8.5",
